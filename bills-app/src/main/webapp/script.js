@@ -26,3 +26,19 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+function addCode() {
+    getBillData();
+}
+
+function getBillData() {
+    //api key is declared in api.js as: 'key'
+    var url = 'https://api.propublica.org/congress/v1/bills/upcoming/house.json';
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", url, false);
+    xmlHttp.setRequestHeader("X-API-Key", key);
+    xmlHttp.send(null);
+
+    receivedJson = xmlHttp.responseText;
+    console.log(receivedJson);
+}
