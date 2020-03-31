@@ -12,19 +12,24 @@
 
     <script src="script.js"></script>
   </head>
-  <body>
-    <section class="header">
-        <div id="header-logo">
-            <img src="./assets/logo.png" alt="Contxt logo"/>
+  <body onload="getBills()">
+      <div id="container">
+          <section class="header">
+            <div id="header-logo">
+                <img src="./assets/logo.png" alt="Contxt logo"/>
 
-            <h1>Contxt</h1>
-        </div>
+                <h1>Contxt</h1>
+            </div>
 
-        <p>Informing today's generation about the country's laws</p>
-    </section>
+            <p>Informing today's generation about the country's laws</p>
+         </section>
 
-    <div id="content">
-     
-    </div>
+        <section class="bills-list-section">
+            <h3>Most recent bills</h3>
+
+            <ul id="bills-list">
+            </ul>
+        </section>
+      </div>
   </body>
 </html>
