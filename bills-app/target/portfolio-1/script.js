@@ -772,16 +772,28 @@ const getBills = () => {
     let billsList = document.getElementById("bills-list");
 
     mockResponse.results[0].bills.map(bill => {
+        // Creating our individual html components
         let billsListItem = document.createElement('li');
-        billsListItem.innerHTML = bill.title;
+        let itemTitle = document.createElement('h2');
+        let itemSector = document.createElement('p');
+        let itemDate = document.createElement('p');
+
+        let appendItemSector = billsListItem.appendChild(itemSector);
+        let appendTitle = billsListItem.appendChild(itemTitle);
+        let appendDate = billsListItem.appendChild(itemDate);
+
+        appendTitle.innerHTML = bill.short_title;
+        appendItemSector.innerHTML = bill.committees;
+        appendDate.innerHTML = "Date introduced: " + bill.introduced_date;
 
         // Giving each of our individual bill a class so we can style later
-        billsListItem.setAttribute("class", "bills-list-titem");
+        billsListItem.setAttribute("class", "bills-list-item");
+        itemTitle.setAttribute("class", "bills-list-item_title");
+        itemSector.setAttribute("class", "bills-list-item_sector");
+        itemDate.setAttribute("class", "bills-list-item_date");
 
+        // Appending our main parent list item to our <ul>
         billsList.appendChild(billsListItem);
     });
 }
-
-
-getBills();
 
