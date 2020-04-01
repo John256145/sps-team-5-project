@@ -39,12 +39,12 @@ function getUpcomingBillsData() {
         headers: {
             "X-API-Key": proPublicaApiKey
         }
-    }).then(response => response.json()).then((upcommingBills) => {
+    }).then(response => response.json()).then((upcomingBills) => {
         //printing the json file to console
-        console.log(upcommingBills);
+        console.log(upcomingBills);
 
         //Prints out the contents of "status" from house.json into the website. 
         //If everything goes well, prints out "OK"
-        document.getElementById('API-status-container').innerText = upcommingBills.status;
+        document.getElementById('API-status-container').innerText = upcomingBills.status;
     });
 }
