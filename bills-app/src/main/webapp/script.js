@@ -28,17 +28,23 @@ function addRandomGreeting() {
 }
 
 function addCode() {
-    getBillData();
+    getUpcomingBillsData();
 }
 
-function getBillData() {
-    //api key is declared in api.js as: 'key'
-    var url = 'https://api.propublica.org/congress/v1/bills/upcoming/house.json';
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", url, false);
-    xmlHttp.setRequestHeader("X-API-Key", key);
-    xmlHttp.send(null);
+function getUpcomingBillsData() {
+    //api key is declared in api.js as: 'proPublicaApiKey'
+    const url = "https://api.propublica.org/congress/v1/bills/upcoming/house.json";
+    fetch(url, {
+        method: "GET", 
+        headers: {
+            "X-API-Key": proPublicaApiKey
+        }
+    }).then(response => response.json()).then((upcommingBills) => {
+        //printing the json file to console
+        console.log(upcommingBills);
 
-    receivedJson = xmlHttp.responseText;
-    console.log(receivedJson);
+        //Prints out the contents of "status" from house.json into the website. 
+        //If everything goes well, prints out "OK"
+        document.getElementById('API-status-container').innerText = upcommingBills.status;
+    });
 }
