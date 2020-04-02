@@ -767,11 +767,18 @@ const mockResponse = {
     }]
 }
 
-// Testing the visualization of the response data on the front end
-const getBills = () => {
+// Fetched the upcoming bills from the api
+const getUpcomingBills = () => {
+    // do api logic here
+
+    renderBills(mockResponse.results[0].bills);
+}
+
+// In charge of diisplaying the bills passed to the function
+const renderBills = (bills) => {
     let billsList = document.getElementById("bills-list");
 
-    mockResponse.results[0].bills.map(bill => {
+    bills.map(bill => {
         // Creating our individual html components
         let billsListItem = document.createElement('li');
         let itemTitle = document.createElement('h2');
