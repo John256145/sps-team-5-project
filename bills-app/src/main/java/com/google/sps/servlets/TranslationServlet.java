@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/translate")
 public class TranslationServlet extends HttpServlet {
-  const String languageCode = "es";
-  
+  public static final String languageCode = "es";
+
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException { 
     // Get the request parameters.
