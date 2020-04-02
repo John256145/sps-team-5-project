@@ -769,8 +769,23 @@ const mockResponse = {
 
 // Fetched the upcoming bills from the api
 const getUpcomingBills = () => {
-    // do api logic here
+    //api key is declared in api.js as: 'proPublicaApiKey'
+    const url = "https://api.propublica.org/congress/v1/bills/upcoming/house.json";
+    fetch(url, {
+        method: "GET", 
+        headers: {
+            "X-API-Key": proPublicaApiKey
+        }
+    }).then(response => response.json()).then((upcomingBills) => {
+        //printing the json file to console
+        console.log(upcomingBills);
 
+        //Prints out the contents of "status" from house.json into the website. 
+        //If everything goes well, prints out "OK"
+        document.getElementById('API-status-container').innerText = upcomingBills.status;
+    });
+
+    // TODO: Pass the response to the render bills method
     renderBills(mockResponse.results[0].bills);
 }
 
