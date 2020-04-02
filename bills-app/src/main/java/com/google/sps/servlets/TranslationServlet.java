@@ -23,11 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/translate")
 public class TranslationServlet extends HttpServlet {
+  const String languageCode = "es";
+  
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException { 
     // Get the request parameters.
     String originalText = "This text will be translated."; //request.getParameter("text");
-    String languageCode = "es"; //request.getParameter("languageCode");
 
     // Do the translation.
     Translate translate = TranslateOptions.getDefaultInstance().getService();
