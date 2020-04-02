@@ -818,4 +818,3 @@ const renderBills = (bills) => {
         billsList.appendChild(billsListItem);
     });
 }
-
