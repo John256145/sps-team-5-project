@@ -27,10 +27,6 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-function addCode() {
-
-}
-
 function getAPIStatus() {
     //formerly, getUpcomingBillsData()
     //api key is declared in api.js as: 'proPublicaApiKey'
@@ -54,8 +50,6 @@ function serchBillsWithAPI() {
     var searchquery = document.getElementById("searchbutton").value;
 
     if (searchquery.length != 0){
-        var resultsString = "";
-
         //resultLimit specifies the number of bills to be returned to the user. This number cannot exceed 20.
         var resultLimit = 5;
 
@@ -63,25 +57,40 @@ function serchBillsWithAPI() {
         fetch(url, {method: "GET", headers: {"X-API-Key": proPublicaApiKey}
         }).then(response => response.json()).then((searchedBills) => {
             //searchedBills is the returned json file
-            var billslist = searchedBills.results[0].bills;
-            console.log(billslist);
-            if (billslist.length == 0) {
-                document.getElementById('API-search-container').innerText = "No results found.";
-            } else if (billslist.length < resultLimit) {
-                    for (var i = 0; i<billslist.length; i++) {
-                        resultsString += billslist[i].title + "\n\n";
-                    }
-                    document.getElementById('API-search-container').innerText = resultsString;
-            } else {
-                    //iterate over the list of bills, and append each to a string
-                    for (var i = 0; i<resultLimit; i++) {
-                        resultsString += billslist[i].title + "\n\n";
-                    }
-                    document.getElementById('API-search-container').innerText = resultsString;
-            }
+            var billsList = searchedBills.results[0].bills;
+            document.getElementById('API-search-container').innerText = billsToString(billsList, resultLimit);
         });
     } else { //if the user clicks on submit without a query
         document.getElementById('API-search-container').innerText = "";
     }
 }
 
+function billsToString(billsList, limit) {
+    resultsString = "";
+
+    if (billsList.length < limit){
+        limit = billsList.length;
+    }
+    
+    if(billsList.length == 0) {
+        resultsString = "No results found.";
+    }
+    else {
+        for (var i = 0; i<limit; i++) {
+            resultsString += billsList[i].title + "\n" + "Introduced on " + billsList[i].introduced_date + ", ";
+            if (billsList[i].active){
+                resultsString += "Active, ";
+            } else {
+                resultsString += "Inactive, ";
+            }
+
+            if (billsList[i].sponsor_title == "Sen.") {
+                resultsString += "Senate";
+            } else {
+                resultsString += "House of Representatives";
+            }
+            resultsString += "\n\n";
+        }
+    }
+    return resultsString;
+}
