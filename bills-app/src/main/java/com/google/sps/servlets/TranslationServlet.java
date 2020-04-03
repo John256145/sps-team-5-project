@@ -28,7 +28,7 @@ public class TranslationServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException { 
     // Get the request parameters.
-    String originalText = "This text will be translated."; //request.getParameter("text");
+    String originalText = request.getParameter("text");
 
     // Do the translation.
     Translate translate = TranslateOptions.getDefaultInstance().getService();

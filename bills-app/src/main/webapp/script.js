@@ -16,11 +16,11 @@
  * Test translation
  * prints translated text to console
  */
-function translate(){
+function translate(text){
+    const params = new URLSearchParams();
+    params.append('text', text);
     fetch('/translate', {method: "POST",
-     headers: {
-      'Content-Type': 'application/json'
-    }
+    body: params
     }).then(response => response.text()).then((translatedText) => {
         console.log(translatedText);
   });
