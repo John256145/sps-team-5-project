@@ -28,12 +28,13 @@ function addRandomGreeting() {
 }
 
 function addCode() {
-    getUpcomingBillsData();
+
 }
 
-function getUpcomingBillsData() {
+function getAPIStatus() {
+    //formerly, getUpcomingBillsData()
     //api key is declared in api.js as: 'proPublicaApiKey'
-    const url = "https://api.propublica.org/congress/v1/bills/upcoming/house.json";
+    const url="https://api.propublica.org/congress/v1/bills/upcoming/house.json";
     fetch(url, {
         method: "GET", 
         headers: {
@@ -45,6 +46,42 @@ function getUpcomingBillsData() {
 
         //Prints out the contents of "status" from house.json into the website. 
         //If everything goes well, prints out "OK"
-        document.getElementById('API-status-container').innerText = upcomingBills.status;
+        document.getElementById('API-search-container').innerText = upcomingBills.status;
     });
 }
+
+function serchBillsWithAPI() {
+    var searchquery = document.getElementById("searchbutton").value;
+
+    if (searchquery.length != 0){
+        var resultsString = "";
+
+        //resultLimit specifies the number of bills to be returned to the user. This number cannot exceed 20.
+        var resultLimit = 5;
+
+        var url="https://api.propublica.org/congress/v1/bills/search.json?query=" + searchquery;
+        fetch(url, {method: "GET", headers: {"X-API-Key": proPublicaApiKey}
+        }).then(response => response.json()).then((searchedBills) => {
+            //searchedBills is the returned json file
+            var billslist = searchedBills.results[0].bills;
+            console.log(billslist);
+            if (billslist.length == 0) {
+                document.getElementById('API-search-container').innerText = "No results found.";
+            } else if (billslist.length < resultLimit) {
+                    for (var i = 0; i<billslist.length; i++) {
+                        resultsString += billslist[i].title + "\n\n";
+                    }
+                    document.getElementById('API-search-container').innerText = resultsString;
+            } else {
+                    //iterate over the list of bills, and append each to a string
+                    for (var i = 0; i<resultLimit; i++) {
+                        resultsString += billslist[i].title + "\n\n";
+                    }
+                    document.getElementById('API-search-container').innerText = resultsString;
+            }
+        });
+    } else { //if the user clicks on submit without a query
+        document.getElementById('API-search-container').innerText = "";
+    }
+}
+
