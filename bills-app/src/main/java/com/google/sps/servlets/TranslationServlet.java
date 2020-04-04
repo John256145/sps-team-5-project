@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/translate")
 public class TranslationServlet extends HttpServlet {
-  public static final String languageCode = "es";
+  public static final String DEFAULT_LANGUAGE_CODE = "es";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException { 
