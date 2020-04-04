@@ -3,14 +3,36 @@
   <head>
     <meta charset="UTF-8">
     <title>My Portfolio</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Sen&display=swap" rel="stylesheet">
+
     <script src="script.js"></script>
+    <script src="api.js"></script> 
   </head>
-  <body onload="translate('Hi')">
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <div id="greeting-container"></div>
-    </div>
+
+  <body onload="addCode()">
+      <div id="container">
+          <section class="header">
+            <div id="header-logo">
+                <img src="./assets/logo.png" alt="Contxt logo"/>
+
+                <h1>Contxt</h1>
+            </div>
+
+            <p>Informing today's generation about the country's laws</p>
+         </section>
+
+        <section class="bills-list-section">
+            <ul id="bills-list">
+            </ul>
+        </section>
+
+        <p>ProPublica API Status:</p>
+        <div id="API-status-container"></div>
+      </div>
   </body>
 </html>
