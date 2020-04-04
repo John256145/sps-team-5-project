@@ -3,24 +3,40 @@
   <head>
     <meta charset="UTF-8">
     <title>My Portfolio</title>
+
     <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Sen&display=swap" rel="stylesheet">
+
     <script src="script.js"></script>
     <script src="api.js"></script> 
   </head>
+
+
   <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <div id="container">
+          <section class="header">
+            <div id="header-logo">
+                <img src="./assets/logo.png" alt="Contxt logo"/>
+
+                <h1>Contxt</h1>
+            </div>
+
+            <p>Informing today's generation about the country's laws</p>
+         </section>
+
+        <section class="bills-list-section">
+            <ul id="bills-list">
+            </ul>
+        </section>
 
       <p>Search for bills!</p>
       <input id="searchbutton" placeholder="Search for..."></input>
       <button value="input" onclick="serchBillsWithAPI()">Search</button>
       <br></br>
       <div id="API-search-container"></div>
-
-    </div>
+      </div>
   </body>
 </html>
