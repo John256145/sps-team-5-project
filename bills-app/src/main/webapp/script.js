@@ -768,9 +768,8 @@ const mockResponse = {
 }
 
 
-const getAPIStatus() = () => {
-    //formerly, getUpcomingBillsData()
-    // Fetched the upcoming bills from the api
+function getUpcomingBillsData() {
+    //prints out API status
     //api key is declared in api.js as: 'proPublicaApiKey'
     const url="https://api.propublica.org/congress/v1/bills/upcoming/house.json";
     fetch(url, {
@@ -851,21 +850,22 @@ function billsToString(billsList, limit) {
         resultsString = "No results found.";
     }
     else {
-        for (var i = 0; i<limit; i++) {
-            resultsString += billsList[i].title + "\n" + "Introduced on " + billsList[i].introduced_date + ", ";
-            if (billsList[i].active){
+        billsList = billsList.slice(0,limit);
+        billsList.map(i => {
+            resultsString += i.title + "\n" + "Introduced on " +  i.introduced_date + ", ";
+            if (i.active){
                 resultsString += "Active, ";
             } else {
                 resultsString += "Inactive, ";
             }
 
-            if (billsList[i].sponsor_title == "Sen.") {
+            if (i.sponsor_title == "Sen.") {
                 resultsString += "Senate";
             } else {
                 resultsString += "House of Representatives";
             }
             resultsString += "\n\n";
-        }
+        });
     }
     return resultsString;
 }
