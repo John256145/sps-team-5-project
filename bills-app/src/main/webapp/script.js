@@ -774,7 +774,7 @@ const getUpcomingBills = () => {
     fetch(url, {
         method: "GET", 
         headers: {
-            "X-API-Key": "/app.js"
+            "X-API-Key": proPublicaApiKey
         }
     }).then(response => response.json()).then((upcomingBills) => {
         //printing the json file to console
