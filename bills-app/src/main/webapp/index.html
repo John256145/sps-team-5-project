@@ -26,16 +26,19 @@
             <p>Informing today's generation about the country's laws</p>
          </section>
 
+         <section class = "search-bar">
+             <p>Search for bills!</p>
+            <input id="searchbutton" placeholder="Search for..."></input>
+            <button value="input" onclick="serchBillsWithAPI()">Search</button>
+            <br></br>
+         </section>
+
         <section class="bills-list-section">
             <ul id="bills-list">
             </ul>
         </section>
 
-      <p>Search for bills!</p>
-      <input id="searchbutton" placeholder="Search for..."></input>
-      <button value="input" onclick="serchBillsWithAPI()">Search</button>
-      <br></br>
-      <div id="API-search-container"></div>
+      
       </div>
   </body>
 </html>

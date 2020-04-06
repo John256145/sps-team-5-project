@@ -832,7 +832,13 @@ function serchBillsWithAPI() {
         }).then(response => response.json()).then((searchedBills) => {
             //searchedBills is the returned json file
             var billsList = searchedBills.results[0].bills;
-            document.getElementById('API-search-container').innerText = billsToString(billsList, resultLimit);
+            
+            //old way of ouputting bills:
+            // document.getElementById('API-search-container').innerText = billsToString(billsList, resultLimit);
+
+            //better way:
+            renderBills(billsList);
+
         });
     } else { //if the user clicks on submit without a query
         document.getElementById('API-search-container').innerText = "";
@@ -884,7 +890,7 @@ function translate(text){
 }
 
 /** 
- * calls both getUpcomingBills() and translate
+ * calls translate
  * used for body onload
  */
 function addCode(){
