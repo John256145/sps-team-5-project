@@ -782,8 +782,7 @@ function getUpcomingBills() {
         console.log(upcomingBills);
 
         //Prints out the contents of "status" from house.json into the website. 
-        //If everything goes well, prints out "OK"
-        //document.getElementById('API-search-container').innerText = upcomingBills.status;
+        //If everything goes well, prints out "OK" to console
         console.log(upcomingBills.status);
     });
 
@@ -894,6 +893,6 @@ function translate(text){
  * used for body onload
  */
 function addCode(){
-    //getUpcomingBills();
+    getUpcomingBills();
     translate("This text will be translated"); 
 }
