@@ -768,7 +768,7 @@ const mockResponse = {
 }
 
 
-function getUpcomingBillsData() {
+function getUpcomingBills() {
     //prints out API status
     //api key is declared in api.js as: 'proPublicaApiKey'
     const url="https://api.propublica.org/congress/v1/bills/upcoming/house.json";
@@ -783,7 +783,8 @@ function getUpcomingBillsData() {
 
         //Prints out the contents of "status" from house.json into the website. 
         //If everything goes well, prints out "OK"
-        document.getElementById('API-search-container').innerText = upcomingBills.status;
+        //document.getElementById('API-search-container').innerText = upcomingBills.status;
+        console.log(upcomingBills.status);
     });
 
     // TODO: Pass the response to the render bills method
@@ -819,7 +820,6 @@ const renderBills = (bills) => {
         billsList.appendChild(billsListItem);
     });
 }
-
 function serchBillsWithAPI() {
     var searchquery = document.getElementById("searchbutton").value;
 
@@ -868,4 +868,26 @@ function billsToString(billsList, limit) {
         });
     }
     return resultsString;
+}
+/**
+ * prints translated text to console
+ * param: text to be translated
+ */
+function translate(text){
+    const params = new URLSearchParams();
+    params.append('text', text);
+    fetch('/translate', {method: "POST",
+    body: params
+    }).then(response => response.text()).then((translatedText) => {
+        console.log(translatedText);
+  });
+}
+
+/** 
+ * calls both getUpcomingBills() and translate
+ * used for body onload
+ */
+function addCode(){
+    //getUpcomingBills();
+    translate("This text will be translated"); 
 }
