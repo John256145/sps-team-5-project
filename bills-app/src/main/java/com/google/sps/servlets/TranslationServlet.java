@@ -33,7 +33,7 @@ public class TranslationServlet extends HttpServlet {
     // Do the translation.
     Translate translate = TranslateOptions.getDefaultInstance().getService();
     Translation translation =
-        translate.translate(originalText, Translate.TranslateOption.targetLanguage(languageCode));
+        translate.translate(originalText, Translate.TranslateOption.targetLanguage(DEFAULT_LANGUAGE_CODE));
     String translatedText = translation.getTranslatedText();
 
     // Output the translation.
