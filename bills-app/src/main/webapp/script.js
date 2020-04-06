@@ -818,3 +818,26 @@ const renderBills = (bills) => {
         billsList.appendChild(billsListItem);
     });
 }
+
+/**
+ * prints translated text to console
+ * param: text to be translated
+ */
+function translate(text){
+    const params = new URLSearchParams();
+    params.append('text', text);
+    fetch('/translate', {method: "POST",
+    body: params
+    }).then(response => response.text()).then((translatedText) => {
+        console.log(translatedText);
+  });
+}
+
+/** 
+ * calls both getUpcomingBills() and translate
+ * used for body onload
+ */
+function addCode(){
+    getUpcomingBills();
+    translate("This text will be translated"); 
+}
