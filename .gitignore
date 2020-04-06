@@ -1,4 +1,5 @@
 target/
 .idea
 api.js
+translate_key.json
 .DS_Store
