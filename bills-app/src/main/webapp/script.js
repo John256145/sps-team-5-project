@@ -767,9 +767,7 @@ const mockResponse = {
     }]
 }
 
-
 function getUpcomingBills() {
-    //prints out API status
     //api key is declared in api.js as: 'proPublicaApiKey'
     const url="https://api.propublica.org/congress/v1/bills/upcoming/house.json";
     fetch(url, {
@@ -778,16 +776,26 @@ function getUpcomingBills() {
             "X-API-Key": proPublicaApiKey
         }
     }).then(response => response.json()).then((upcomingBills) => {
-        //printing the json file to console
-        console.log(upcomingBills);
-
-        //Prints out the contents of "status" from house.json into the website. 
+        //Prints out the contents of "status" from house.json
         //If everything goes well, prints out "OK" to console
         console.log(upcomingBills.status);
+        upcomingBills.results[0].bills.map(i => {
+            renderBillFromID(i.congress, i.bill_slug);
+        });
     });
+}
 
-    // TODO: Pass the response to the render bills method
-    renderBills(mockResponse.results[0].bills);
+function renderBillFromID(congress, billID) {
+    var url="https://api.propublica.org/congress/v1/" + congress + "/bills/"+ billID + ".json";
+    fetch(url, {
+        method: "GET", 
+        headers: {
+            "X-API-Key": proPublicaApiKey
+        }
+    }).then(response => response.json()).then((billData) => {
+        //this will only render one bill
+        renderBills(billData.results);
+    });
 }
 
 // In charge of diisplaying the bills passed to the function
@@ -832,8 +840,6 @@ function serchBillsWithAPI() {
             //searchedBills is the returned json file
             var billsList = searchedBills.results[0].bills;
             
-            
-
             //better way:
             clearBillData();
             renderBills(billsList);
