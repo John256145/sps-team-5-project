@@ -832,10 +832,10 @@ function serchBillsWithAPI() {
             //searchedBills is the returned json file
             var billsList = searchedBills.results[0].bills;
             
-            //old way of ouputting bills:
-            // document.getElementById('API-search-container').innerText = billsToString(billsList, resultLimit);
+            
 
             //better way:
+            clearBillData();
             renderBills(billsList);
 
         });
@@ -843,6 +843,11 @@ function serchBillsWithAPI() {
         document.getElementById('API-search-container').innerText = "";
     }
 }
+
+function clearBillData() {
+    document.getElementById("bills-list").innerHTML = "";
+}
+
 
 function billsToString(billsList, limit) {
     resultsString = "";
