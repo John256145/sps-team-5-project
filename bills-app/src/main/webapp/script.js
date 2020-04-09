@@ -831,60 +831,25 @@ function serchBillsWithAPI() {
     var searchquery = document.getElementById("searchbutton").value;
 
     if (searchquery.length != 0){
-        //resultLimit specifies the number of bills to be returned to the user. This number cannot exceed 20.
-        var resultLimit = 5;
-
         var url="https://api.propublica.org/congress/v1/bills/search.json?query=" + searchquery;
         fetch(url, {method: "GET", headers: {"X-API-Key": proPublicaApiKey}
         }).then(response => response.json()).then((searchedBills) => {
             //searchedBills is the returned json file
             var billsList = searchedBills.results[0].bills;
-            
-            //better way:
             clearBillData();
-            renderBills(billsList);
-
+            if (billsList.length == 0) {
+                document.getElementById("bills-list").innerText = "No results found.";
+            } else {
+                renderBills(billsList);
+            }
         });
-    } else { //if the user clicks on submit without a query
-        document.getElementById('API-search-container').innerText = "";
-    }
+    } //nothing happens if the user enters nothing into the search bar
 }
 
 function clearBillData() {
     document.getElementById("bills-list").innerHTML = "";
 }
 
-
-function billsToString(billsList, limit) {
-    resultsString = "";
-
-    if (billsList.length < limit){
-        limit = billsList.length;
-    }
-    
-    if(billsList.length == 0) {
-        resultsString = "No results found.";
-    }
-    else {
-        billsList = billsList.slice(0,limit);
-        billsList.map(i => {
-            resultsString += i.title + "\n" + "Introduced on " +  i.introduced_date + ", ";
-            if (i.active){
-                resultsString += "Active, ";
-            } else {
-                resultsString += "Inactive, ";
-            }
-
-            if (i.sponsor_title == "Sen.") {
-                resultsString += "Senate";
-            } else {
-                resultsString += "House of Representatives";
-            }
-            resultsString += "\n\n";
-        });
-    }
-    return resultsString;
-}
 /**
  * prints translated text to console
  * param: text to be translated
