@@ -24,15 +24,21 @@
             </div>
 
             <p>Informing today's generation about the country's laws</p>
+
+            <div>
+                <label for="language-select">Language:</label>
+
+                <select id="language-select" onchange="getLanguageOption(this)">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
          </section>
 
         <section class="bills-list-section">
             <ul id="bills-list">
             </ul>
         </section>
-
-        <p>ProPublica API Status:</p>
-        <div id="API-status-container"></div>
       </div>
   </body>
 </html>
