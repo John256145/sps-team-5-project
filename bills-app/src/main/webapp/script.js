@@ -769,7 +769,8 @@ const mockResponse = {
 
 function getUpcomingBills() {
     //api key is declared in api.js as: 'proPublicaApiKey'
-    const url="https://api.propublica.org/congress/v1/bills/upcoming/house.json";
+    // clearBillData();
+    const url = "https://api.propublica.org/congress/v1/bills/upcoming/house.json";
     fetch(url, {
         method: "GET", 
         headers: {
@@ -779,14 +780,20 @@ function getUpcomingBills() {
         //Prints out the contents of "status" from house.json
         //If everything goes well, prints out "OK" to console
         console.log(upcomingBills.status);
-        upcomingBills.results[0].bills.map(i => {
-            renderBillFromID(i.congress, i.bill_slug);
-        });
+        clearBillData();
+
+        //the api call to getting upcoming bills is not returning any bills.
+        //this renders all upcoming bills to the main page 
+        // upcomingBills.results[0].bills.map(bill => {
+        //     renderBillFromID(bill.congress, bill.bill_slug);
+        // });
+        //instead, rendering the mockResponse:
+        renderBills(mockResponse.results[0].bills);
     });
 }
 
 function renderBillFromID(congress, billID) {
-    var url="https://api.propublica.org/congress/v1/" + congress + "/bills/"+ billID + ".json";
+    var url = "https://api.propublica.org/congress/v1/" + congress + "/bills/" + billID + ".json";
     fetch(url, {
         method: "GET", 
         headers: {
@@ -827,11 +834,11 @@ const renderBills = (bills) => {
         billsList.appendChild(billsListItem);
     });
 }
-function serchBillsWithAPI() {
+function searchBillsWithApi() {
     var searchquery = document.getElementById("searchbutton").value;
 
     if (searchquery.length != 0){
-        var url="https://api.propublica.org/congress/v1/bills/search.json?query=" + searchquery;
+        var url = "https://api.propublica.org/congress/v1/bills/search.json?query=" + searchquery;
         fetch(url, {method: "GET", headers: {"X-API-Key": proPublicaApiKey}
         }).then(response => response.json()).then((searchedBills) => {
             //searchedBills is the returned json file
