@@ -792,6 +792,19 @@ function getUpcomingBills() {
     });
 }
 
+function getRecentBills() {
+    const url = "https://api.propublica.org/congress/v1/115/house/bills/introduced.json";
+    fetch(url, {
+        method: "GET", 
+        headers: {
+            "X-API-Key": proPublicaApiKey
+        }
+    }).then(response => response.json()).then((recentBills) => {
+        clearBillData();
+        renderBills(recentBills.results[0].bills);
+    });
+}
+
 function renderBillFromID(congress, billID) {
     var url = "https://api.propublica.org/congress/v1/" + congress + "/bills/" + billID + ".json";
     fetch(url, {
@@ -876,6 +889,6 @@ function translate(text){
  * used for body onload
  */
 function addCode(){
-    getUpcomingBills();
+    getRecentBills();
     translate("This text will be translated"); 
 }
