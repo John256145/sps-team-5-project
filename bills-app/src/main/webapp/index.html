@@ -9,6 +9,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Sen&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <script src="script.js"></script>
     <script src="api.js"></script> 
@@ -24,12 +25,18 @@
             </div>
 
             <p>Informing today's generation about the country's laws</p>
+            <br></br>
          </section>
 
          <section class="search-bar">
-             <p>Search for bills!</p>
-            <input id="searchbutton" placeholder="Search for..."></input>
-            <button value="input" onclick="searchBillsWithApi()">Search</button>
+             <div class="wrap">
+                <div class="search">
+                    <input type="text" class="searchTerm" id="searchbutton" placeholder="Search for bills..."></input>
+                    <button type="submit" class="searchButton" value="input" onclick="searchBillsWithApi()">
+                        <i class="material-icons">search</i>
+                    </button>
+                </div>
+            </div>
             <br></br>
          </section>
 
@@ -37,8 +44,6 @@
             <ul id="bills-list">
             </ul>
         </section>
-
-      
       </div>
   </body>
 </html>
