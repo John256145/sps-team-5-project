@@ -434,3 +434,39 @@ template {
 [hidden] {
   display: none;
 }
+
+/* search bar */
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 3px solid #01DB79;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 40px 0 0 40px;
+  outline: none;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #01DB79;
+  background: #01DB79;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 40px 40px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.wrap{
+  width: 15%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
