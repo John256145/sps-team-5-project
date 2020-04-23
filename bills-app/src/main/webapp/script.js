@@ -13,12 +13,9 @@
 // limitations under the License.
 
 
-// Fetched the recent bills from the api
 const getUpcomingBills = async (lang) => {
-    console.log(lang);
-
     //api key is declared in api.js as: 'proPublicaApiKey'
-    const url = "https://api.propublica.org/congress/v1/115/house/bills/introduced.json";
+    const url = "https://api.propublica.org/congress/v1/bills/upcoming/house.json";
 
     await fetch(url, {
         method: "GET", 
@@ -28,8 +25,41 @@ const getUpcomingBills = async (lang) => {
     })
     .then(response => response.json())
     .then((upcomingBills) => {
-        // Renders the bills on the website        
-        renderBills(upcomingBills.results[0].bills, lang);
+        console.log(upcomingBills);
+        
+        clearBillData();
+
+        upcomingBills.results[0].bills.map(bill => {
+            renderBillFromID(bill.congress, bill.bill_slug, lang);
+        });
+    });
+}
+
+const getRecentBills = async (lang) =>  {
+    const url = "https://api.propublica.org/congress/v1/115/house/bills/introduced.json";
+
+    await fetch(url, {
+        method: "GET", 
+        headers: {
+            "X-API-Key": proPublicaApiKey
+        }
+    }).then(response => response.json()).then((recentBills) => {
+        clearBillData();
+        renderBills(recentBills.results[0].bills, lang);
+    });
+}
+
+const renderBillFromID = async (congress, billID, lang) => {
+    var url = "https://api.propublica.org/congress/v1/" + congress + "/bills/" + billID + ".json";
+
+    await fetch(url, {
+        method: "GET", 
+        headers: {
+            "X-API-Key": proPublicaApiKey
+        }
+    }).then(response => response.json()).then((billData) => {
+        //this will only render one bill
+        renderBills(billData.results, lang);
     });
 }
 
@@ -42,19 +72,20 @@ const renderBills = (bills, lang) => {
         // Creating our individual html components
         let billsListItem = document.createElement('li');
         let itemTitle = document.createElement('h2');
+        let itemLink = document.createElement('a');
         let itemSector = document.createElement('p');
         let itemDate = document.createElement('p');
 
+
         let appendItemSector = billsListItem.appendChild(itemSector);
         let appendTitle = billsListItem.appendChild(itemTitle);
-        let appendDate = billsListItem.appendChild(itemDate);
-
-        //appendTitle.innerHTML = bill.short_title;
-        //appendItemSector.innerHTML = bill.committees;    
+        let appendDate = billsListItem.appendChild(itemDate); 
+        let appendLink = billsListItem.appendChild(itemLink);
 
         translate(bill.short_title, lang, appendTitle);
         translate(bill.committees, lang, appendItemSector);
         appendDate.innerHTML = "Date introduced: " + bill.introduced_date;
+        appendLink.innerHTML = "View bill";
 
         // Giving each of our individual bill a class so we can style later
         billsListItem.setAttribute("class", "bills-list-item");
@@ -62,9 +93,39 @@ const renderBills = (bills, lang) => {
         itemSector.setAttribute("class", "bills-list-item_sector");
         itemDate.setAttribute("class", "bills-list-item_date");
 
+        itemLink.setAttribute("class", "bills-list-item_link");
+        itemLink.setAttribute("href", `${bill.govtrack_url}`)
+        itemLink.setAttribute("target", "_blank");
+        
         // Appending our main parent list item to our <ul>
         billsList.appendChild(billsListItem);
     });
+}
+
+function searchBillsWithApi() {
+    var searchquery = document.getElementById("searchbutton").value;
+
+    if (searchquery.length != 0){
+        var url = "https://api.propublica.org/congress/v1/bills/search.json?query=" + searchquery;
+        fetch(url, {method: "GET", headers: {"X-API-Key": proPublicaApiKey}
+        }).then(response => response.json()).then((searchedBills) => {
+            console.log("Searched bill: ", searchedBills);
+
+            //searchedBills is the returned json file
+            var billsList = searchedBills.results[0].bills;
+            clearBillData();
+
+            if (billsList.length == 0) {
+                document.getElementById("bills-list").innerText = "No results found.";
+            } else {
+                renderBills(billsList, "en");
+            }
+        });
+    } //nothing happens if the user enters nothing into the search bar
+}
+
+function clearBillData() {
+    document.getElementById("bills-list").innerHTML = "";
 }
 
 /**
@@ -87,16 +148,38 @@ const translate = async (text, lang, element) => {
 }
 
 /** 
- * calls both getUpcomingBills() and translate
+ * calls translate
  * used for body onload
  */
 const addCode = () => {
-    getUpcomingBills("en");
-    translate("This text will be translated", "en"); 
+    // Setting our default values
+    localStorage.setItem("billType", "recent");
+    localStorage.setItem("lang", "en");
+
+    getRecentBills("en");
 }
 
 const getLanguageOption = (selectObject) => {
     let selectedLanguage = selectObject.value;
 
-    getUpcomingBills(selectedLanguage);
+    // Placing the new language value in local storage
+    localStorage.setItem('lang', selectedLanguage);
+
+    // Getting the value of the type of bills the user is currently trying to display
+    const currentBillsType = localStorage.getItem('billType');
+
+    // Rendering the bill based on the selected language
+    if (currentBillsType === "recent") getRecentBills(selectedLanguage);
+    if (currentBillsType === "upcoming") getUpcomingBills(selectedLanguage);
+}
+
+const getBillsTypeOption = (selectObject) => {
+    let selectedBillsType = selectObject.value;
+    
+    localStorage.setItem('billType', selectedBillsType);
+
+    const currentLang = localStorage.getItem('lang');
+
+    if (selectedBillsType === "recent") getRecentBills(currentLang);
+    if (selectedBillsType === "upcoming") getUpcomingBills(currentLang);
 }

@@ -9,6 +9,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Literata:wght@500;600;700&family=Sen&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <script src="script.js"></script>
     <script src="api.js"></script> 
@@ -23,9 +24,9 @@
                 <h1>Contxt</h1>
             </div>
 
-            <p>Informing today's generation about the country's laws</p>
-
-            <div>
+            <p id="header-subtitle">Informing today's generation about the country's laws</p>
+            
+            <div class="select-container">
                 <label for="language-select">Language:</label>
 
                 <select id="language-select" onchange="getLanguageOption(this)">
@@ -33,6 +34,30 @@
                     <option value="es">Spanish</option>
                 </select>
             </div>
+
+            <div class="select-container">
+                <label for="billType-select">View:</label>
+
+                <select id="billType-select" onChange="getBillsTypeOption(this)">
+                    <option value="recent">Recently passed bills</option>
+                    <option value="upcoming">Upcoming bills</option>
+                </select>
+            </div>
+
+            <br></br>
+         </section>
+
+         <section class="search-bar">
+             <div class="wrap">
+                <div class="search">
+                    <input type="text" class="searchTerm" id="searchbutton" placeholder="Search for bills..."></input>
+                    <button type="submit" class="searchButton" value="input" onclick="searchBillsWithApi()">
+                        <i class="material-icons">search</i>
+                    </button>
+                </div>
+            </div>
+            <br></br>
+
          </section>
 
         <section class="bills-list-section">
