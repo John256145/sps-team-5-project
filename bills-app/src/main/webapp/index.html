@@ -24,7 +24,26 @@
                 <h1>Contxt</h1>
             </div>
 
-            <p>Informing today's generation about the country's laws</p>
+            <p id="header-subtitle">Informing today's generation about the country's laws</p>
+            
+            <div class="select-container">
+                <label for="language-select">Language:</label>
+
+                <select id="language-select" onchange="getLanguageOption(this)">
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
+
+            <div class="select-container">
+                <label for="billType-select">View:</label>
+
+                <select id="billType-select" onChange="getBillsTypeOption(this)">
+                    <option value="recent">Recently passed bills</option>
+                    <option value="upcoming">Upcoming bills</option>
+                </select>
+            </div>
+
             <br></br>
          </section>
 
@@ -38,6 +57,7 @@
                 </div>
             </div>
             <br></br>
+
          </section>
 
         <section class="bills-list-section">

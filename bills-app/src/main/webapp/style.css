@@ -40,6 +40,10 @@
     margin-right: 1rem;
 }
 
+#header-subtitle {
+    margin-bottom: 1rem;
+}
+
 #bills-list {
     list-style: none;
 
@@ -79,6 +83,26 @@
     background-color: #01DB79;
 
     border-radius: 6rem;
+}
+
+.bills-list-item_date {
+    margin-bottom: 0.5rem;
+}
+
+.bills-list-item_link {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+
+    background-color: #01DB79;
+    color: white;
+}
+
+.select-container {
+    margin: 0.5rem;
 }
 
 
@@ -465,7 +489,7 @@ template {
 }
 
 .wrap{
-  width: 15%;
+  width: 40%;
   position: absolute;
   left: 50%;
   transform: translate(-50%, -50%);

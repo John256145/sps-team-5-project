@@ -23,17 +23,19 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/translate")
 public class TranslationServlet extends HttpServlet {
-  public static final String DEFAULT_LANGUAGE_CODE = "es";
-
+  public static final String SPANISH_LANGUAGE_CODE = "es";
+  public static final String ENGLISH_LANGUAGE_CODE = "en";
+    
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException { 
     // Get the request parameters.
     String originalText = request.getParameter("text");
+    String langCode = request.getParameter("lang");
 
     // Do the translation.
     Translate translate = TranslateOptions.getDefaultInstance().getService();
     Translation translation =
-        translate.translate(originalText, Translate.TranslateOption.targetLanguage(DEFAULT_LANGUAGE_CODE));
+        translate.translate(originalText, Translate.TranslateOption.targetLanguage(langCode));
     String translatedText = translation.getTranslatedText();
 
     // Output the translation.
