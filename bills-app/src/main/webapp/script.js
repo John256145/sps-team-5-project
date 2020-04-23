@@ -26,12 +26,17 @@ const getUpcomingBills = async (lang) => {
     .then(response => response.json())
     .then((upcomingBills) => {
         console.log(upcomingBills);
-        
+
         clearBillData();
 
-        upcomingBills.results[0].bills.map(bill => {
-            renderBillFromID(bill.congress, bill.bill_slug, lang);
-        });
+        if (upcomingBills.results[0].bills.length == 0) {
+            document.getElementById("bills-list").innerHTML = "No upcoming bills found, try again later.";
+        } else {
+            upcomingBills.results[0].bills.map(bill => {
+                renderBillFromID(bill.congress, bill.bill_slug, lang);
+            });
+        }
+
     });
 }
 
@@ -105,7 +110,7 @@ const renderBills = (bills, lang) => {
 function searchBillsWithApi() {
     var searchquery = document.getElementById("searchbutton").value;
 
-    if (searchquery.length != 0){
+    if (searchquery !== ""){
         var url = "https://api.propublica.org/congress/v1/bills/search.json?query=" + searchquery;
         fetch(url, {method: "GET", headers: {"X-API-Key": proPublicaApiKey}
         }).then(response => response.json()).then((searchedBills) => {
@@ -121,7 +126,14 @@ function searchBillsWithApi() {
                 renderBills(billsList, "en");
             }
         });
-    } //nothing happens if the user enters nothing into the search bar
+    } else {
+        // Fetch the default selected data when search input value is empty
+        let selectedLang = localStorage.getItem('lang');
+        let selectedBillsType = localStorage.getItem('billType');
+
+        if (selectedBillsType === "recent") getRecentBills(selectedLang);
+        if (selectedBillsType === "upcoming") getUpcomingBills(selectedLang);
+    }
 }
 
 function clearBillData() {
