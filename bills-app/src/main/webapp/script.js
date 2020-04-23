@@ -61,7 +61,7 @@ const renderBillFromID = async (congress, billID, lang) => {
             "X-API-Key": proPublicaApiKey
         }
     }).then(response => response.json()).then((billData) => {
-        //this will only render one bill
+        // This will only render one bill
         renderBills(billData.results, lang);
     });
 }
@@ -69,7 +69,6 @@ const renderBillFromID = async (congress, billID, lang) => {
 // In charge of diisplaying the bills passed to the function
 const renderBills = (bills, lang) => {
     let billsList = document.getElementById("bills-list");
-    billsList.innerHTML = "";
 
     bills.map(bill => {
         // Creating our individual html components
@@ -79,7 +78,6 @@ const renderBills = (bills, lang) => {
         let itemSector = document.createElement('p');
         let itemDate = document.createElement('p');
 
-
         let appendItemSector = billsListItem.appendChild(itemSector);
         let appendTitle = billsListItem.appendChild(itemTitle);
         let appendDate = billsListItem.appendChild(itemDate); 
@@ -87,6 +85,7 @@ const renderBills = (bills, lang) => {
 
         translate(bill.short_title, lang, appendTitle);
         translate(bill.committees, lang, appendItemSector);
+
         appendDate.innerHTML = "Date introduced: " + bill.introduced_date;
         appendLink.innerHTML = "View bill";
 
