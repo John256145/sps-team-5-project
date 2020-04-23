@@ -25,8 +25,6 @@ const getUpcomingBills = async (lang) => {
     })
     .then(response => response.json())
     .then((upcomingBills) => {
-        console.log(upcomingBills);
-
         clearBillData();
 
         if (upcomingBills.results[0].bills.length == 0) {
@@ -114,8 +112,6 @@ function searchBillsWithApi() {
         var url = "https://api.propublica.org/congress/v1/bills/search.json?query=" + searchquery;
         fetch(url, {method: "GET", headers: {"X-API-Key": proPublicaApiKey}
         }).then(response => response.json()).then((searchedBills) => {
-            console.log("Searched bill: ", searchedBills);
-
             //searchedBills is the returned json file
             var billsList = searchedBills.results[0].bills;
             clearBillData();
